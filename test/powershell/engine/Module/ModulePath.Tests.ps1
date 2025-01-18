@@ -68,7 +68,7 @@ Describe "SxS Module Path Basic Tests" -tags "CI" {
 
     It "validate sxs module path" -Skip:$skipNoPwsh {
 
-        $env:PSModulePath = ""
+        $env:PSModulePath = $null
         $defaultModulePath = & $powershell -nopro -c '$env:PSModulePath'
         $pathSeparator = [System.IO.Path]::PathSeparator
 
@@ -180,7 +180,7 @@ Describe "SxS Module Path Basic Tests" -tags "CI" {
         try {
             $userConfig = '{ "PSModulePath": "myUserPath" }'
             Set-Content -Path $userConfigPath -Value $userConfig -Force
-            $out = & $powershell -noprofile -command 'powershell.exe -noprofile -command $env:PSModulePath'
+            $out = & $powershell -noprofile -command 'powershell.exe -noprofile -command `$env:PSModulePath'
             $out | Should -Not -BeLike 'myUserPath;*'
         }
         finally {
